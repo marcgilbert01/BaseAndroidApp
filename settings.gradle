@@ -1,2 +1,15 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    plugins {
+        id 'org.jetbrains.kotlin.multiplatform' version '1.4.30'
+    }
+}
+
 include ':app'
+include ':presentation'
 rootProject.name = "BaseAndroidApp"
