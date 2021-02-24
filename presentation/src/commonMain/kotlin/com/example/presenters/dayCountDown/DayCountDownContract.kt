@@ -1,14 +1,13 @@
 package com.example.presenters.dayCountDown
 
+import net.freshclouds.recipes.presentation.common.BasePresenter
+
 interface DayCountDownContract {
 
     interface View {
-        fun displayDueDate(string: String)
-        fun displayDaysLeft(string: String)
+        fun displayDueDate(string: String?)
+        fun displaySecondsLeftBeforeDueDate(string: String?)
     }
 
-    interface Presenter {
-        fun onViewStart()
-        fun onViewStop()
-    }
+    abstract class Presenter: BasePresenter()
 }

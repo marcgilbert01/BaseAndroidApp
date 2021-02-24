@@ -1,14 +1,34 @@
 package com.example.presenters.dayCountDown
 
-class DayCountDownPresenter(
-    private val view: DayCountDownContract.View
-) : DayCountDownContract.Presenter{
+import com.example.domain.dayCountDown.usecase.ObserveTimeLeftUseCase
+import kotlinx.coroutines.flow.collect
 
-    override fun onViewStart() {
-        view.displayDaysLeft("12")
-        view.displayDueDate("07/09/2021")
+class DayCountDownPresenter(
+    private val view: DayCountDownContract.View,
+    private val observeTimeLeftUseCase: ObserveTimeLeftUseCase
+) : DayCountDownContract.Presenter() {
+
+    companion object {
+        const val dueDateFirstJanTwentyFifty = 2524608000000
     }
 
-    override fun onViewStop() {
+    private var viewModel = ViewModel()
+
+    override suspend fun onStart() {
+        observeTimeLeftUseCase.exeUseCase(ObserveTimeLeftUseCase.Params(dueDateFirstJanTwentyFifty))
+            .collect {
+                viewModel.secondsLeftBeforeDueDate = it.seconds.toString()
+                invalidate()
+            }
+    }
+
+    override suspend fun doInvalidate() {
+        view.displayDueDate(viewModel.dueDate)
+        view.displaySecondsLeftBeforeDueDate(viewModel.secondsLeftBeforeDueDate)
+    }
+
+    private class ViewModel {
+        var secondsLeftBeforeDueDate: String? = null
+        var dueDate: String? = null
     }
 }
