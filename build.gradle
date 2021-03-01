@@ -21,6 +21,8 @@ allprojects {
     }
 }
 
+ext.androidCompileSdkVersion = 29
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

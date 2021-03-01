@@ -24,5 +24,5 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(rootProject.property("androidCompileSdkVersion") as Int)
 }
