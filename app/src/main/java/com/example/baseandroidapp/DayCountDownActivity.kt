@@ -3,8 +3,11 @@ package com.example.baseandroidapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.example.data.parisEvent.ParisEventsRepoImpl
+import com.example.data.parisEvent.RecordsToParisEventConverter
 import com.example.domain.dayCountDown.usecase.ObserveCurrentTimeUseCaseImpl
 import com.example.domain.dayCountDown.usecase.ObserveTimeLeftUseCaseImpl
+import com.example.domain.parisEvent.usecase.GetParisEventUseCaseImpl
 import com.example.presenters.dayCountDown.DayCountDownContract
 import com.example.presenters.dayCountDown.DayCountDownPresenter
 
@@ -19,6 +22,11 @@ class DayCountDownActivity : AppCompatActivity(), DayCountDownContract.View {
             view = this,
             observeTimeLeftUseCase = ObserveTimeLeftUseCaseImpl(
                 currentTimeUseCase = ObserveCurrentTimeUseCaseImpl()
+            ),
+            getParisEventListUseCase = GetParisEventUseCaseImpl(
+                parisEventRepo = ParisEventsRepoImpl(
+                    recordsToParisEventConverter = RecordsToParisEventConverter()
+                )
             )
         )
     }
@@ -39,5 +47,9 @@ class DayCountDownActivity : AppCompatActivity(), DayCountDownContract.View {
 
     override fun displaySecondsLeftBeforeDueDate(string: String?) {
         findViewById<TextView>(R.id.second_left_text_view).text = string
+    }
+
+    override fun displayParisEvent(string: String?) {
+        findViewById<TextView>(R.id.parisEventTitle).text = string
     }
 }
