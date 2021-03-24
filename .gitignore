@@ -18,3 +18,4 @@ local.properties
 /presentation/build/
 /domain/build/
 /data/build/
+/factory/build/

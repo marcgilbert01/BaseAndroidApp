@@ -3,13 +3,7 @@ package com.example.baseandroidapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.example.data.parisEvent.ParisEventsRepoImpl
-import com.example.data.parisEvent.RecordsToParisEventConverter
-import com.example.domain.dayCountDown.usecase.ObserveCurrentTimeUseCaseImpl
-import com.example.domain.dayCountDown.usecase.ObserveTimeLeftUseCaseImpl
-import com.example.domain.parisEvent.usecase.GetParisEventUseCaseImpl
 import com.example.presenters.dayCountDown.DayCountDownContract
-import com.example.presenters.dayCountDown.DayCountDownPresenter
 
 class DayCountDownActivity : AppCompatActivity(), DayCountDownContract.View {
 
@@ -18,17 +12,7 @@ class DayCountDownActivity : AppCompatActivity(), DayCountDownContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day_count_down)
-        presenter = DayCountDownPresenter(
-            view = this,
-            observeTimeLeftUseCase = ObserveTimeLeftUseCaseImpl(
-                currentTimeUseCase = ObserveCurrentTimeUseCaseImpl()
-            ),
-            getParisEventListUseCase = GetParisEventUseCaseImpl(
-                parisEventRepo = ParisEventsRepoImpl(
-                    recordsToParisEventConverter = RecordsToParisEventConverter()
-                )
-            )
-        )
+        presenter = BaseAndroidApp.instance.presenterFactory.createDayCountDownPresenter(this)
     }
 
     override fun onStart() {
