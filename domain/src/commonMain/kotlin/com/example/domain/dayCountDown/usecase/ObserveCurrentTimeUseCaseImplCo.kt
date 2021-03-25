@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import systemCurrentTimeMillis
 
-class ObserveCurrentTimeUseCaseImpl : ObserveCurrentTimeUseCase {
+class ObserveCurrentTimeUseCaseImplCo : ObserveCurrentTimeUseCaseCo {
 
     companion object {
         const val INTERVAL_IN_MILLIS = 500L

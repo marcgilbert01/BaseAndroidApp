@@ -1,9 +1,9 @@
 package com.example.domain.dayCountDown.usecase
 
-import com.example.domain.common.UseCaseVoid
+import com.example.domain.common.UseCaseVoidCo
 import kotlinx.coroutines.flow.Flow
 
-interface ObserveCurrentTimeUseCase : UseCaseVoid<Flow<Long>> {
+interface ObserveCurrentTimeUseCaseCo : UseCaseVoidCo<Flow<Long>> {
 
     override suspend fun exeUseCase(): Flow<Long>
 }

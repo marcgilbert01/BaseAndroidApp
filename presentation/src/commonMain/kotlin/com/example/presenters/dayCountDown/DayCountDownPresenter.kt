@@ -1,7 +1,7 @@
 package com.example.presenters.dayCountDown
 
-import com.example.domain.dayCountDown.usecase.ObserveTimeLeftUseCase
-import com.example.domain.parisEvent.usecase.GetParisEventListUseCase
+import com.example.domain.dayCountDown.usecase.ObserveTimeLeftUseCaseCo
+import com.example.domain.parisEvent.usecase.GetParisEventListUseCaseCo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 
 class DayCountDownPresenter(
     private val view: DayCountDownContract.View,
-    private val observeTimeLeftUseCase: ObserveTimeLeftUseCase,
-    private val getParisEventListUseCase: GetParisEventListUseCase
+    private val observeTimeLeftUseCase: ObserveTimeLeftUseCaseCo,
+    private val getParisEventListUseCase: GetParisEventListUseCaseCo
 ) : DayCountDownContract.Presenter() {
 
     companion object {
@@ -22,7 +22,7 @@ class DayCountDownPresenter(
 
     override suspend fun onStart() {
         CoroutineScope(Dispatchers.Default).launch {
-            observeTimeLeftUseCase.exeUseCase(ObserveTimeLeftUseCase.Params(dueDateFirstJanTwentyFifty))
+            observeTimeLeftUseCase.exeUseCase(ObserveTimeLeftUseCaseCo.Params(dueDateFirstJanTwentyFifty))
                 .collect {
                     viewModel.secondsLeftBeforeDueDate.emit(it.seconds.toString())
                 }

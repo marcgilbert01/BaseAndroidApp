@@ -4,11 +4,11 @@ import com.example.domain.dayCountDown.entity.TimeLeft
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class ObserveTimeLeftUseCaseImpl(
-    private val currentTimeUseCase: ObserveCurrentTimeUseCase
-) : ObserveTimeLeftUseCase {
+class ObserveTimeLeftUseCaseCoImpl(
+    private val currentTimeUseCase: ObserveCurrentTimeUseCaseCo
+) : ObserveTimeLeftUseCaseCo {
 
-    override suspend fun exeUseCase(params: ObserveTimeLeftUseCase.Params): Flow<TimeLeft> {
+    override suspend fun exeUseCase(params: ObserveTimeLeftUseCaseCo.Params): Flow<TimeLeft> {
         return currentTimeUseCase.exeUseCase()
             .map { currentTimeInMillis ->
                 val timeLeftInMillis = params.dueDateInMillis - currentTimeInMillis
