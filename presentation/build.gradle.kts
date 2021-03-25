@@ -6,6 +6,11 @@ plugins {
 
 kotlin {
     android()
+    iosX64 {
+        binaries {
+            framework()
+        }
+    }
 
     sourceSets {
         val commonMain by getting {

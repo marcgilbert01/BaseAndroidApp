@@ -3,7 +3,8 @@ package com.example.presenters.dayCountDown
 import com.example.domain.dayCountDown.usecase.ObserveTimeLeftUseCase
 import com.example.domain.parisEvent.usecase.GetParisEventListUseCase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -20,29 +21,34 @@ class DayCountDownPresenter(
     private var viewModel = ViewModel()
 
     override suspend fun onStart() {
-        CoroutineScope(currentCoroutineContext()).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             observeTimeLeftUseCase.exeUseCase(ObserveTimeLeftUseCase.Params(dueDateFirstJanTwentyFifty))
                 .collect {
-                    viewModel.secondsLeftBeforeDueDate = it.seconds.toString()
-                    println("marc time left ${it.seconds}")
-                    invalidate()
+                    viewModel.secondsLeftBeforeDueDate.emit(it.seconds.toString())
                 }
         }
-        getParisEventListUseCase.exeUseCase().let {
-            viewModel.parisEventText = it[0].title
-            invalidate()
+        getParisEventListUseCase.exeUseCase().let { parisEventList ->
+            parisEventList[0].title?.let {
+                viewModel.parisEventText.emit(it)
+            }
         }
     }
 
-    override suspend fun doInvalidate() {
-        view.displayDueDate(viewModel.dueDate)
-        view.displaySecondsLeftBeforeDueDate(viewModel.secondsLeftBeforeDueDate)
-        view.displayParisEvent(viewModel.parisEventText)
+    override suspend fun listenToViewModelAndUpdateUi() {
+        listenTo(viewModel.secondsLeftBeforeDueDate) {
+            view.displaySecondsLeftBeforeDueDate(it)
+        }
+        listenTo(viewModel.dueDate) {
+            view.displayDueDate(it)
+        }
+        listenTo(viewModel.parisEventText) {
+            view.displayParisEvent(it)
+        }
     }
 
     private class ViewModel {
-        var secondsLeftBeforeDueDate: String? = null
-        var dueDate: String? = null
-        var parisEventText: String? = null
+        var secondsLeftBeforeDueDate = MutableStateFlow("")
+        var dueDate = MutableStateFlow("")
+        var parisEventText = MutableStateFlow("")
     }
 }

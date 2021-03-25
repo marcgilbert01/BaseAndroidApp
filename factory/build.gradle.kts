@@ -6,6 +6,13 @@ plugins {
 
 kotlin {
     android()
+    iosX64 {
+        binaries.framework {
+            export(project(":presentation"))
+            export(project(":domain"))
+            export(project(":data"))
+        }
+    }
 
     sourceSets {
         val commonMain by getting {

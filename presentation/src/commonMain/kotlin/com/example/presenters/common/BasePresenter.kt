@@ -1,27 +1,33 @@
-package net.freshclouds.recipes.presentation.common
+package com.example.presenters.common
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 abstract class BasePresenter {
 
     private var job: Job? = null
 
     fun onViewStart() {
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.Main).launch {
+            listenToViewModelAndUpdateUi()
             onStart()
         }.also {
-            job = it
+            this.job = it
         }
     }
 
     protected abstract suspend fun onStart()
 
-    suspend fun invalidate() = withContext(Dispatchers.Main) {
-        doInvalidate()
-    }
+    protected abstract suspend fun listenToViewModelAndUpdateUi()
 
-    protected abstract suspend fun doInvalidate()
+    protected suspend fun <T>listenTo(flow: Flow<T>, onEach: (T)->Unit ) {
+        CoroutineScope(currentCoroutineContext()).launch {
+            flow.collect {
+                onEach.invoke(it)
+            }
+        }
+    }
 
     fun onViewStop() {
         job?.cancel()

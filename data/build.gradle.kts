@@ -7,6 +7,11 @@ plugins {
 
 kotlin {
     android()
+    iosX64 {
+        binaries {
+            framework()
+        }
+    }
     sourceSets {
         val ktorVersion = "1.5.2"
         val commonMain by getting {

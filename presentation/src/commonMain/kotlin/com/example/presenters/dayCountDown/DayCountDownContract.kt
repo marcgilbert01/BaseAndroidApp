@@ -1,6 +1,6 @@
 package com.example.presenters.dayCountDown
 
-import net.freshclouds.recipes.presentation.common.BasePresenter
+import com.example.presenters.common.BasePresenter
 
 interface DayCountDownContract {
 
