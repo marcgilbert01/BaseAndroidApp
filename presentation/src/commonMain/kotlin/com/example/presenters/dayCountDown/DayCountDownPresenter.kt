@@ -27,11 +27,11 @@ class DayCountDownPresenter(
                     viewModel.secondsLeftBeforeDueDate.emit(it.seconds.toString())
                 }
         }
-        getParisEventListUseCase.exeUseCase().let { parisEventList ->
-            parisEventList[0].title?.let {
-                viewModel.parisEventText.emit(it)
-            }
-        }
+//        getParisEventListUseCase.exeUseCase().let { parisEventList ->
+//            parisEventList[0].title?.let {
+//                viewModel.parisEventText.emit(it)
+//            }
+//        }
     }
 
     override suspend fun listenToViewModelAndUpdateUi() {

@@ -1,7 +1,7 @@
 package com.example.domain.parisEvent.usecase
 
 import com.example.domain.parisEvent.entity.ParisEvent
-import com.nowtv.domain.common.UseCaseVoid
+import com.example.domain.common.UseCaseVoid
 
 interface GetParisEventListUseCase : UseCaseVoid<List<ParisEvent>> {
 

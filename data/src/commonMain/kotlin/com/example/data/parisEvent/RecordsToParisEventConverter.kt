@@ -2,7 +2,7 @@ package com.example.data.parisEvent
 
 import Records
 import com.example.domain.parisEvent.entity.ParisEvent
-import com.nowtv.domain.common.BaseMapperToDomain
+import com.example.domain.common.BaseMapperToDomain
 
 class RecordsToParisEventConverter : BaseMapperToDomain<Records, ParisEvent>() {
     override fun mapToDomain(toBeTransformed: Records): ParisEvent {
