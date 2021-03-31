@@ -1,10 +1,10 @@
 package com.example.domain.forTrying
 
-import com.example.domain.common.UseCaseCo
+import com.example.domain.common.UseCase
 
-class ForTryingUseCaseCoImpl : UseCaseCo<String, ForTryingUseCaseCoImpl.Params> {
+class ForTryingUseCaseCoImpl : UseCase<String, ForTryingUseCaseCoImpl.Params> {
 
-    override suspend fun exeUseCase(params: Params): String {
+    override fun exeUseCase(params: Params): String {
         println("marc param1=${params.param1}")
         return params.param1
     }

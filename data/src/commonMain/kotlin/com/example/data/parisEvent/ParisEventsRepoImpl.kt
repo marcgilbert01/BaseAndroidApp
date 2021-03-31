@@ -3,6 +3,7 @@ package com.example.data.parisEvent
 import EventListData
 import com.example.domain.parisEvent.entity.ParisEvent
 import com.example.domain.parisEvent.repository.ParisEventRepo
+import com.squareup.sqldelight.db.SqlDriver
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
